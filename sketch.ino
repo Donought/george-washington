@@ -1,27 +1,25 @@
-int motor1pin1 = 2;
-int motor1pin2 = 3;
-
-
-void setup() {
-  Serial.begin(9600);
-  // put your setup code here, to run once:
-  pinMode(motor1pin1, OUTPUT);
-  pinMode(motor1pin2, OUTPUT);
-  //pinMode(motor2pin1, OUTPUT);
-  //pinMode(motor2pin2, OUTPUT);
-}
-
-void loop() {
-  // put your main code here, to run repeatedly:
-     
-  Serial.print("Code run ");
-  digitalWrite(motor1pin1, HIGH);
-  digitalWrite(motor1pin2, LOW);
-  delay(1000);
+int activeFor = 500- 70;
+int inactiveFor = 200;
+ void setup()   
+  {   
+  Serial.begin(9600);   
+   pinMode(3,OUTPUT); // Motor pin 3   
+   pinMode(4,OUTPUT); // Motor pin 4   
+   digitalWrite(4,LOW); // Normally LOW inthis pin   
+   pinMode(A0,INPUT);  // 10k Potentiometer   
+  }   
+  void loop(){   
+  spin();
   
   
-  digitalWrite(motor1pin1, LOW);
-  digitalWrite(motor1pin2, LOW);
-  delay(1000);
- 
-}
+  }     
+
+void spin(){
+  int s=analogRead(A0); // 10k Potentiometer   
+  int z=map(s,0,1024,0,255);   
+  Serial.println(z);   
+  analogWrite(3,z);   
+delay(activeFor);
+digitalWrite(3,0);
+delay(inactiveFor);
+  }
